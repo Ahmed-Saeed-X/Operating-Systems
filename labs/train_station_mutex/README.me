@@ -1,0 +1,153 @@
+# Distributed Redlock Implementation Project
+
+## 1. Project Overview
+
+This project involves implementing the **Redlock Algorithm** for distributed locks in a simulated distributed environment. The goal is to synchronize access to a shared resource (e.g., a counter) in a fault-tolerant and reliable way.
+
+By setting up a multi-node Redis environment using Docker and implementing the Redlock Algorithm, you'll gain practical experience in distributed synchronization, fault tolerance, and containerized environments.
+
+---
+
+## 2. Learning Objectives
+
+- Understand the concept of distributed locks and their importance in distributed systems.
+- Learn how to implement the **Redlock Algorithm** for reliable synchronization across multiple Redis nodes.
+- Gain hands-on experience with **Redis** and **Docker Compose**.
+- Develop and test a fault-tolerant system in a simulated distributed environment.
+
+---
+
+## 3. Problem Statement
+
+You are required to implement a distributed locking mechanism using the **Redlock Algorithm**. This algorithm will control access to a shared resource in a distributed system. You will need to simulate a multi-node Redis environment and ensure the system operates correctly even in the case of Redis node failures.
+
+---
+
+## 4. Requirements
+
+### 4.1. Docker Environment Setup
+
+- Simulate a multi-node Redis cluster using **Docker Compose** (5 Redis nodes).
+- Ensure fault tolerance, allowing the system to function correctly even if up to **two Redis nodes** fail.
+- Use logging to record lock acquisition, release, and failed attempts.
+
+### 4.2. Redlock Algorithm Implementation
+
+- Implement the Redlock algorithm in **Python** (or another programming language of choice).
+- Control access to a shared resource (e.g., incrementing a counter stored in a file).
+- The system should retry acquiring the lock if a process fails to acquire it.
+
+### 4.3. Fault Tolerance
+
+- Simulate Redis node failures by stopping one or more Redis nodes and ensuring that the system continues to function with the remaining nodes.
+
+---
+
+## 5. Dependencies
+
+- **Python**: Create a virtual environment:
+  
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+
+- Install the required Python libraries using `pip`:
+
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+- **Docker**: Ensure Docker is installed on your system. Follow the [Docker Installation Guide](https://docs.docker.com/get-docker/) if needed.
+  
+- **Redis**: Redis instances will be set up using Docker containers.
+
+---
+
+## 6. Getting Started
+
+### 6.1. Set Up Docker Environment
+
+Use the provided `docker-compose.yml` file to set up 5 Redis nodes:
+
+```bash
+docker-compose up
+```
+
+This will create the following Redis nodes:
+
+- `redis-node-1`
+- `redis-node-2`
+- `redis-node-3`
+- `redis-node-4`
+- `redis-node-5`
+
+---
+
+### 6.2. Implement the Redlock Algorithm
+
+- Write the logic to acquire and release locks across the Redis nodes using the **SET NX PX** commands.
+- Ensure that a unique identifier is used for each lock request.
+
+---
+
+### 6.3. Run the Application
+
+Execute the Python script that demonstrates access to the shared resource using the Redlock Algorithm:
+
+```bash
+python redlock_simulation.py
+```
+
+---
+
+### 6.4. Test Fault Tolerance
+
+Simulate Redis node failures by stopping one or more nodes:
+
+```bash
+docker stop redis-node-2 redis-node-3
+```
+
+Observe how the system continues to function with the remaining nodes.
+
+---
+
+## 7. Project Files
+
+1. **docker-compose.yml**: Defines the Docker configuration to set up the Redis cluster.
+2. **redlock_simulation.py**: Python script implementing the Redlock Algorithm and simulating access to a shared resource.
+3. **README.md**: This documentation file explaining the project and requirements.
+
+---
+
+## 8. Expected Output
+
+When running the system, you should expect to see logs for lock operations, including:
+
+### Example Logs:
+- Successful lock acquisition and release:
+  ```
+  Node 1: Acquiring lock...
+  Node 1: Lock acquired.
+  Node 1: Accessing critical section...
+  Node 1: Releasing lock.
+  ```
+
+- Failed lock attempts:
+  ```
+  Node 2: Failed to acquire lock. Retrying...
+  ```
+
+- **Fault Tolerance Demonstration**: 
+  The system should continue functioning correctly when up to **two Redis nodes** fail.
+
+---
+
+## 9. Further Reading
+
+- [Redlock Algorithm](https://redis.io/docs/reference/patterns/redlock/)
+- [Docker Documentation](https://docs.docker.com/)
+- [Redis Commands: SETNX](https://redis.io/commands/setnx/)
+
+---
